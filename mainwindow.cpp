@@ -13,6 +13,12 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    QSettings settings("ClockApp", "ClockApp");
+
+    ui->cbShowDate->setChecked(settings.value("showDate", false).toBool());
+    ui->cbShowWeekday->setChecked(settings.value("showWeekday", false).toBool());
+
     normalSize = size();
     expandedSize = QSize(400, 200);
     timer = new QTimer(this);
@@ -48,6 +54,11 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    QSettings settings("ClockApp", "ClockApp");
+
+    settings.setValue("showDate", ui->cbShowDate->isChecked());
+    settings.setValue("showWeekday", ui->cbShowWeekday->isChecked());
+
     delete ui;
 }
 
